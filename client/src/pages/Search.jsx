@@ -1,35 +1,31 @@
-import { Button, Select, TextInput } from 'flowbite-react';
+import { Select, TextInput } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PostCard from '../components/PostCard';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 export default function Search() {
   const [sidebarData, setSidebarData] = useState({
     searchTerm: '',
     sort: 'desc',
-    // category: 'uncategorized',
   });
 
-  // console.log(sidebarData);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   const location = useLocation();
-
   const navigate = useNavigate();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get('searchTerm');
     const sortFromUrl = urlParams.get('sort');
-    // const categoryFromUrl = urlParams.get('category');
     if (searchTermFromUrl || sortFromUrl) {
       setSidebarData({
         ...sidebarData,
         searchTerm: searchTermFromUrl,
         sort: sortFromUrl,
-        // category: categoryFromUrl,
       });
     }
 
@@ -63,10 +59,6 @@ export default function Search() {
       const order = e.target.value || 'desc';
       setSidebarData({ ...sidebarData, sort: order });
     }
-    // if (e.target.id === 'category') {
-    //   const category = e.target.value || 'uncategorized';
-    //   setSidebarData({ ...sidebarData, category });
-    // }
   };
 
   const handleSubmit = (e) => {
@@ -74,7 +66,6 @@ export default function Search() {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set('searchTerm', sidebarData.searchTerm);
     urlParams.set('sort', sidebarData.sort);
-    // urlParams.set('category', sidebarData.category);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
@@ -101,67 +92,78 @@ export default function Search() {
   };
 
   return (
-    <div className='flex flex-col md:flex-row'>
-      <div className='p-7 border-b md:border-r md:min-h-screen border-gray-500'>
-        <form className='flex flex-col gap-8' onSubmit={handleSubmit}>
-          <div className='flex   items-center gap-2'>
-            <label className='whitespace-nowrap font-semibold'>
-              Search Term:
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Sidebar */}
+      <aside className="w-full md:w-72 lg:w-80 flex-shrink-0 p-6 sm:p-8 border-b md:border-b-0 md:border-r border-editorial-border dark:border-editorial-dark-border bg-editorial-cream/30 dark:bg-editorial-dark-surface/20">
+        <h2 className="font-sans text-lg font-semibold text-editorial-charcoal dark:text-editorial-white mb-6 tracking-tight">
+          Filter & Search
+        </h2>
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+          <div>
+            <label className="block font-sans text-xs font-semibold uppercase tracking-wider text-editorial-medium dark:text-editorial-light mb-2">
+              Search Term
             </label>
             <TextInput
-              placeholder='Search...'
-              id='searchTerm'
-              type='text'
+              placeholder="Search..."
+              id="searchTerm"
+              type="text"
               value={sidebarData.searchTerm}
               onChange={handleChange}
+              icon={AiOutlineSearch}
             />
           </div>
-          <div className='flex items-center gap-2'>
-            <label className='font-semibold'>Sort:</label>
-            <Select onChange={handleChange} value={sidebarData.sort} id='sort'>
-              <option value='desc'>Latest</option>
-              <option value='asc'>Oldest</option>
+          <div>
+            <label className="block font-sans text-xs font-semibold uppercase tracking-wider text-editorial-medium dark:text-editorial-light mb-2">
+              Sort By
+            </label>
+            <Select onChange={handleChange} value={sidebarData.sort} id="sort">
+              <option value="desc">Latest</option>
+              <option value="asc">Oldest</option>
             </Select>
           </div>
-          <div className='flex items-center gap-2'>
-            {/* <label className='font-semibold'>Category:</label> */}
-            {/* <Select
-              onChange={handleChange}
-              value={sidebarData.category}
-              id='category'
-            >
-              <option value='uncategorized'>Uncategorized</option>
-              <option value='reactjs'>React.js</option>
-              <option value='nextjs'>Next.js</option>
-              <option value='javascript'>JavaScript</option>
-            </Select> */}
-          </div>
-          <Button type='submit' outline gradientDuoTone='purpleToPink'>
+          <button
+            type="submit"
+            className="mt-2 px-5 py-2.5 font-sans text-sm font-semibold uppercase tracking-wider text-white bg-editorial-charcoal dark:bg-editorial-accent rounded-lg hover:bg-editorial-dark dark:hover:bg-editorial-accent-hover transition-colors duration-300"
+          >
             Apply Filters
-          </Button>
+          </button>
         </form>
-      </div>
-      <div className='w-full'>
-        <h1 className='text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5 '>
-          Posts results:
+      </aside>
+
+      {/* Results */}
+      <div className="flex-1 p-6 sm:p-8">
+        <h1 className="font-sans text-2xl font-bold text-editorial-charcoal dark:text-editorial-white tracking-tight mb-6 pb-4 border-b border-editorial-border dark:border-editorial-dark-border">
+          Search Results
         </h1>
-        <div className='p-7 flex flex-wrap gap-4'>
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {!loading && posts.length === 0 && (
-            <p className='text-xl text-gray-500'>No posts found.</p>
+            <p className="text-editorial-medium font-sans col-span-full text-center py-12">
+              No posts found.
+            </p>
           )}
-          {loading && <p className='text-xl text-gray-500'>Loading...</p>}
+          {loading && (
+            <p className="text-editorial-medium font-sans col-span-full text-center py-12">
+              Loading...
+            </p>
+          )}
           {!loading &&
             posts &&
-            posts.map((post) => <PostCard key={post._id} post={post} />)}
-          {showMore && (
+            posts.map((post) => (
+              <div key={post._id} className="animate-fade-in-up">
+                <PostCard post={post} />
+              </div>
+            ))}
+        </div>
+        {showMore && (
+          <div className="text-center mt-8">
             <button
               onClick={handleShowMore}
-              className='text-teal-500 text-lg hover:underline p-7 w-full'
+              className="font-sans text-sm font-semibold text-editorial-accent hover:text-editorial-accent-hover transition-colors"
             >
               Show More
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

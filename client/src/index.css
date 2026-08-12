@@ -2,47 +2,498 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  height: 100vh;
-  font-family: "EB Garamond";
+/* ========================================
+   EDITORIAL DESIGN SYSTEM
+   ======================================== */
+
+:root {
+  --color-white: #FAF8F5;
+  --color-cream: #F0ECE4;
+  --color-charcoal: #1A1A1A;
+  --color-dark: #2D2D2D;
+  --color-medium: #6B6B6B;
+  --color-light: #9A9A9A;
+  --color-border: #E8E4DD;
+  --color-accent: #C9A84C;
+  --color-accent-hover: #B8963F;
+  --transition-speed: 300ms;
 }
 
-.ql-editor{
-  font-size: 1.10rem;
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+body {
+  min-height: 100vh;
+  font-family: "EB Garamond", Georgia, serif;
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-light);
+}
+
+/* ========================================
+   QUILL EDITOR
+   ======================================== */
+
+.ql-editor {
+  font-size: 1.10rem;
+  font-family: "EB Garamond", Georgia, serif;
+}
+
+/* ========================================
+   POST CONTENT TYPOGRAPHY
+   ======================================== */
 
 .post-content p {
-  margin-bottom: 0.5rem;
-  font-size:larger;
-  /* font-weight; */
+  margin-bottom: 1.25rem;
+  font-size: 1.2rem;
+  line-height: 1.85;
+  color: #2D2D2D;
+}
+
+.dark .post-content p {
+  color: #E8E4DD;
 }
 
 .post-content h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  font-family: sans-serif;
-  margin: 1.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 2.5rem 0 1rem;
+  color: #1A1A1A;
+  letter-spacing: -0.02em;
+}
+
+.dark .post-content h1 {
+  color: #FAF8F5;
 }
 
 .post-content h2 {
-  font-size: 1.4rem;
-  font-family: sans-serif;
-  margin: 1.5rem 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 2rem 0 0.75rem;
+  color: #1A1A1A;
+  letter-spacing: -0.01em;
+}
+
+.dark .post-content h2 {
+  color: #FAF8F5;
+}
+
+.post-content h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 1.5rem 0 0.5rem;
+  color: #2D2D2D;
+}
+
+.dark .post-content h3 {
+  color: #E8E4DD;
 }
 
 .post-content a {
-  color: rgb(73, 149, 199);
+  color: var(--color-accent);
   text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-speed) ease;
 }
 
 .post-content a:hover {
-  text-decoration: underline;
+  border-bottom-color: var(--color-accent);
 }
 
 .dark .post-content a {
-  color: red;
+  color: #E2C87D;
 }
-.post-content a:hover{
-  text-decoration: underline;
-  color: yellow;
+
+.dark .post-content a:hover {
+  border-bottom-color: #E2C87D;
+}
+
+.post-content blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  color: var(--color-medium);
+  font-size: 1.25rem;
+}
+
+.post-content img {
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+.post-content ul, .post-content ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.post-content li {
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out both;
+}
+
+/* ========================================
+   SELECTION
+   ======================================== */
+
+::selection {
+  background-color: #C9A84C33;
+  color: #1A1A1A;
+}
+
+/* ========================================
+   DARK MODE OVERRIDES
+   ======================================== */
+
+.dark body,
+.dark #root {
+  background-color: #0D0D0D;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1A1816;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2A2724;
+}
+
+.dark ::selection {
+  background-color: #C9A84C44;
+  color: #FAF8F5;
+}
+
+/* ========================================
+   BACKGROUND ANIMATIONS — WATERCOLOR AURORA ORBS
+   ======================================== */
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  will-change: transform;
+}
+
+/* Light mode: Rich, flowing watercolor/aurora effect */
+.orb-1 {
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(circle, #FAD6A5, transparent 60%);
+  top: -15%;
+  right: -10%;
+  opacity: 0.25;
+  animation: orbFloat1 35s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+  width: 80vw;
+  height: 80vw;
+  background: radial-gradient(circle, #D4AF61, transparent 60%);
+  bottom: -10%;
+  left: -20%;
+  opacity: 0.2;
+  animation: orbFloat2 40s ease-in-out infinite alternate;
+}
+
+.orb-3 {
+  width: 90vw;
+  height: 90vw;
+  background: radial-gradient(circle, #F4E0C5, transparent 60%);
+  top: 20%;
+  left: 10%;
+  opacity: 0.3;
+  animation: orbFloat3 45s ease-in-out infinite alternate;
+}
+
+/* Dark mode overrides: Keep it subtle and mysterious in dark mode */
+.dark .orb-1 {
+  opacity: 0.08;
+  background: radial-gradient(circle, #C9A84C, transparent 60%);
+}
+
+.dark .orb-2 {
+  opacity: 0.06;
+  background: radial-gradient(circle, #8B7355, transparent 60%);
+}
+
+.dark .orb-3 {
+  opacity: 0.05;
+  background: radial-gradient(circle, #D4AF61, transparent 60%);
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  20% { transform: translate(-40px, 50px) scale(1.05); }
+  40% { transform: translate(25px, -30px) scale(0.97); }
+  60% { transform: translate(-20px, 35px) scale(1.03); }
+  80% { transform: translate(30px, -15px) scale(0.98); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(50px, -40px) scale(1.08); }
+  50% { transform: translate(-25px, 25px) scale(0.93); }
+  75% { transform: translate(35px, -20px) scale(1.04); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  15% { transform: translate(35px, 25px) scale(1.06); }
+  35% { transform: translate(-25px, 50px) scale(0.94); }
+  55% { transform: translate(30px, -20px) scale(1.08); }
+  75% { transform: translate(-40px, -25px) scale(0.96); }
+}
+
+/* ========================================
+   BACKGROUND ANIMATIONS — FILM GRAIN
+   ======================================== */
+
+.grain-overlay {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.018;
+  background: repeating-conic-gradient(#9A9A9A 0.0001%, transparent 0.0003%) 50% 50% / 2500px 2500px;
+  animation: grainShift 4s steps(8) infinite;
+}
+
+.dark .grain-overlay {
+  opacity: 0.03;
+}
+
+@keyframes grainShift {
+  0% { transform: translate(0, 0); }
+  12.5% { transform: translate(-5%, -8%); }
+  25% { transform: translate(-12%, 4%); }
+  37.5% { transform: translate(6%, -18%); }
+  50% { transform: translate(-4%, 18%); }
+  62.5% { transform: translate(-10%, 8%); }
+  75% { transform: translate(12%, 0%); }
+  87.5% { transform: translate(2%, 28%); }
+  100% { transform: translate(-8%, 8%); }
+}
+
+/* ========================================
+   BACKGROUND ANIMATIONS — PARTICLES
+   ======================================== */
+
+.particle {
+  position: absolute;
+  bottom: -20px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  opacity: calc(var(--p-opacity, 0.2) * 1.5); /* Slightly stronger in light mode */
+  animation: floatUp linear infinite;
+  box-shadow: 0 0 10px var(--color-accent);
+  will-change: transform;
+}
+
+.dark .particle {
+  opacity: var(--p-opacity, 0.2); /* Softer in dark mode */
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--p-opacity, 0.2);
+  }
+  90% {
+    opacity: var(--p-opacity, 0.2);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(20px);
+    opacity: 0;
+  }
+}
+
+/* ========================================
+   MOUSE GLOW
+   ======================================== */
+
+.mouse-glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.15) 0%, rgba(201, 168, 76, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  mix-blend-mode: multiply; /* Better for light backgrounds */
+  will-change: left, top, opacity;
+}
+
+.dark .mouse-glow {
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.12) 0%, rgba(201, 168, 76, 0) 70%);
+  mix-blend-mode: screen; /* Better for dark backgrounds */
+}
+
+/* ========================================
+   SHIMMER HOVER
+   ======================================== */
+
+.hover-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(201, 168, 76, 0) 0%,
+    rgba(201, 168, 76, 0.15) 50%,
+    rgba(201, 168, 76, 0) 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.dark .hover-shimmer::after {
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.05) 50%,
+    rgba(255,255,255,0) 100%
+  );
+}
+
+.hover-shimmer:hover::after {
+  left: 200%;
+}
+
+/* ========================================
+   NEW MICRO-ANIMATIONS
+   ======================================== */
+
+/* Gentle breathing float for hero section */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: floatGentle 6s ease-in-out infinite;
+}
+
+/* Logo breathing glow */
+@keyframes logoGlow {
+  0%, 100% { text-shadow: 0 0 4px rgba(201, 168, 76, 0.1); }
+  50% { text-shadow: 0 0 15px rgba(201, 168, 76, 0.5); }
+}
+
+.logo-glow:hover {
+  animation: logoGlow 2s ease-in-out infinite;
+}
+
+/* Shiny button sweep effect */
+.btn-shiny {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shiny::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.4) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: all 0.7s ease;
+  z-index: 1;
+}
+
+.dark .btn-shiny::before {
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.2) 50%,
+    rgba(255,255,255,0) 100%
+  );
+}
+
+.btn-shiny:hover::before {
+  left: 200%;
 }
